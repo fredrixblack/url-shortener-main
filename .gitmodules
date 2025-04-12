@@ -6,4 +6,4 @@
 	url = https://github.com/fredrixblack/api-gateway.git
 [submodule "url-shortening-service"]
 	path = url-shortening-service
-	url = https://github.com/fredrixblack/url-shorterning-service.git
+	url = https://github.com/fredrixblack/url-shortening-service.git
