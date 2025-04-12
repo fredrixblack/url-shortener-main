@@ -1,0 +1,67 @@
+services:
+  api-gateway:
+    image: url-shortener-nginx
+    ports:
+      - "80:80"
+    depends_on:
+      - url-shortening-service
+      - auth-service
+    networks:
+      - url-net
+
+  url-shortening-service:
+    image: url-shortening-service
+    environment:
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_NAME=url_shortener
+      - DB_USER=url_user
+      - DB_PASSWORD=your_secure_password
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+    depends_on:
+      - postgres
+      - redis
+    networks:
+      - url-net
+
+  auth-service:
+    image: auth-service
+    environment:
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_NAME=url_shortener
+      - DB_USER=url_user
+      - DB_PASSWORD=your_secure_password
+      - JWT_SECRET=your_jwt_secret_key
+    depends_on:
+      - postgres
+    networks:
+      - url-net
+
+  postgres:
+    image: postgres:14
+    environment:
+      - POSTGRES_USER=url_user
+      - POSTGRES_PASSWORD=your_secure_password
+      - POSTGRES_DB=url_shortener
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - url-net
+
+  redis:
+    image: redis:7
+    ports:
+      - "6379:6379"
+    networks:
+      - url-net
+
+networks:
+  url-net:
+    driver: bridge
+
+volumes:
+  pgdata:

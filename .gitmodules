@@ -1,0 +1,9 @@
+[submodule "auth-service"]
+	path = auth-service
+	url = https://github.com/fredrixblack/auth-service.git
+[submodule "api-gateway"]
+	path = api-gateway
+	url = https://github.com/fredrixblack/api-gateway.git
+[submodule "url-shortening-service"]
+	path = url-shortening-service
+	url = https://github.com/fredrixblack/url-shorterning-service.git
